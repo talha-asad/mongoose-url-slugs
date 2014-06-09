@@ -13,7 +13,7 @@ $ npm install mongoose-url-slugs
 ## Example Usage
 
 
-### Example 1: Uploading local file with callback.
+### Example 1: Using default options and merging 2 fields for slug generation.
 
 ```js
 var mongoose = require('mongoose'),
@@ -29,7 +29,7 @@ var testSchema = new Schema({
 testSchema.plugin(URLSlugs('first_name last_name'));
 ```
 
-### Example 2: Uploading local file without callback.
+### Example 2: Using 'myslug' key for storing slug.
 
 ```js
 var mongoose = require('mongoose'),
@@ -60,7 +60,7 @@ testSchema.plugin(URLSlugs('first_name last_name', {key: 'myslug'}));
 
 
 ## History
-* v0.0.2 (2014-06-09) -- Initial release.
+* v0.0.3 (2014-06-09) -- Initial release.
 
 
 ## License
