@@ -7,11 +7,13 @@ function defaultURLSlugGeneration(text) {
 var defaultOptions = {
   key: 'slug',
   generator: defaultURLSlugGeneration,
-  type: String,
-  trim: true,
-  required: true,
-  index: true,
-  unique: true,
+  index: {
+    type: String,
+    trim: true,
+    index: true,
+    unique: true,
+    required: true
+  }
 };
   
 module.exports = function(slugProperty, options) {
@@ -22,10 +24,11 @@ module.exports = function(slugProperty, options) {
   }
   return (function (schema) {
     var schemaField = {};
-    schemaField[options.key] = {type: options.type, trim: options.trim, index: options.index, unique: options.unique, required: options.required};
+    schemaField[options.key] = {type: options.index.type, trim: options.index.trim, index: options.index.index, unique: options.index.unique, required: options.index.required};
     schema.add(schemaField);
 
     schema.methods.ensureUniqueSlug = function (slug, cb) {
+      if (!options.index.unique) return cb(null, true);
       var model = this.model(this.constructor.modelName);
       var q = {};
       q[options.key] = slug;
