@@ -13,7 +13,7 @@ var defaultOptions = {
     trim: true,
     index: true,
     unique: true,
-    required: false
+    required: true
   }
 };
   
@@ -41,10 +41,10 @@ module.exports = function(slugProperty, options) {
       });
     }
 
-    schema.pre('save', function (next) {
+    schema.pre('validate', function (next) {
       var doc = this;
       if (doc.get(options.key)) return next();
-
+      
       var toSlugify = '';
       if (slugProperty instanceof Array) {
         for (var i = 0; i < slugProperty.length; i++) {

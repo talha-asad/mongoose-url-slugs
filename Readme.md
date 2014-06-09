@@ -16,118 +16,51 @@ $ npm install mongoose-url-slugs
 ### Example 1: Uploading local file with callback.
 
 ```js
-var Streaming-S3 = require('streaming-s3'),
-    fs = require('fs');
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    URLSlugs = require('mongoose-url-slugs');
 
-var fStream = fs.CreateReadStream(__dirname + '/video.mp4');
-var uploader = new Streaming-S3(fStream, 'accessKey', 'secretKey',
-  {
-    Bucket: 'example.streaming-s3.com',
-    Key: 'video.mp4',
-    ContentType: 'video/mp4'
-  },  function (err, resp, stats) {
-  if (err) return console.log('Upload error: ', e);
-  console.log('Upload stats: ', stats);
-  console.log('Upload successful: ', resp);
-  }
-);
+var testSchema = new Schema({
+  first_name: {type: String, default: '', trim: true},
+  last_name: {type: String, default: '', trim: true},
+  rev: {type: String, default: '', trim: true}
+});
+
+testSchema.plugin(URLSlugs('first_name last_name'));
 ```
 
 ### Example 2: Uploading local file without callback.
 
 ```js
-var Streaming-S3 = require('streaming-s3'),
-    fs = require('fs');
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    URLSlugs = require('mongoose-url-slugs');
 
-var fStream = fs.CreateReadStream(__dirname + '/video.mp4');
-var uploader = new Streaming-S3(fStream, 'accessKey', 'secretKey',
-  {
-    Bucket: 'example.streaming-s3.com',
-    Key: 'video.mp4',
-    ContentType: 'video/mp4'
-  }
-);
-  
-uploader.begin(); // important if callback not provided.
-
-uploader.on('data', function (bytesRead) {
-  console.log(bytesRead, ' bytes read.');
+var testSchema = new Schema({
+  first_name: {type: String, default: '', trim: true},
+  last_name: {type: String, default: '', trim: true},
+  rev: {type: String, default: '', trim: true}
 });
 
-uploader.on('part', function (number) {
-  console.log('Part ', number, ' uploaded.');
-});
-
-// All parts uploaded, but upload not yet acknowledged.
-uploader.on('uploaded', function (stats) {
-  console.log('Upload stats: ', stats);
-});
-
-uploader.on('finished', function (resp, stats) {
-  console.log('Upload finished: ', resp);
-});
-
-uploader.on('error', function (e) {
-  console.log('Upload error: ', e);
-});
+// Save slugs to 'myslug' field.
+testSchema.plugin(URLSlugs('first_name last_name', {key: 'myslug'}));
 ```
 
-
-### Example 2: Uploading remote file without callback and options
-
-```js
-var Streaming-S3 = require('streaming-s3'),
-    request = require('request');
-
-var rStream = request.get('http://www.google.com');
-var uploader = new Streaming-S3(rStream, 'accessKey', 'secretKey',
-  {
-    Bucket: 'example.streaming-s3.com',
-    Key: 'google.html',
-    ContentType: 'text/html'
-  },
-  {
-    concurrentParts: 2,
-    waitTime: 10000,
-    retries: 1,
-    maxPartSize: 10*1024*1024,
-  }
-);
-  
-uploader.begin(); // important if callback not provided.
-
-uploader.on('data', function (bytesRead) {
-  console.log(bytesRead, ' bytes read.');
-});
-
-uploader.on('part', function (number) {
-  console.log('Part ', number, ' uploaded.');
-});
-
-// All parts uploaded, but upload not yet acknowledged.
-uploader.on('uploaded', function (stats) {
-  console.log('Upload stats: ', stats);
-});
-
-uploader.on('finished', function (resp, stats) {
-  console.log('Upload finished: ', resp);
-});
-
-uploader.on('error', function (e) {
-  console.log('Upload error: ', e);
-});
-```
 
 ## Defaults and Configurables
 
-* **concurrentParts** (Default: 5) - Parts that are uploaded simultaneously.
-* **waitTime** (Default: 1 min (60000 ms)) - Time to wait for verification from S3 after uploading parts.
-* **retries** (Default: 5) - Number of times to retry uploading a part, before failing.
-* **maxPartSize** (Default: 5 MB) - Maximum size of each part.
+* **key** (Default: 'slug') - Parts that are uploaded simultaneously.
+* **generator(text)** (Default: lowercases and then replaces all alphanumeric characters to '-') - Function to generate slug.
+* **index** - key schema settings. (see below)
+* - **index.type** (Default: String) - Mongoose schema property type.
+* - **index.trim** (Default: true) - Mongoose schema property trim.
+* - **index.index** (Default: true) - Mongoose schema property index.
+* - **index.unique** (Default: true) - Mongoose schema property unique.
+* - **index.required** (Default: true) - Mongoose schema property required.
 
 
 ## History
-* v0.0.1 (2014-06-09) -- Initial release.
+* v0.0.2 (2014-06-09) -- Initial release.
 
 
 ## License
