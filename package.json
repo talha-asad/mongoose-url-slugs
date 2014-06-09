@@ -1,0 +1,30 @@
+{
+  "author": {
+    "name": "Talha Asad",
+    "email": "talha@mindblaze.net",
+    "url": "http://mindblaze.net"
+  },
+  "name": "mongoose-url-slugs",
+  "description": "Create URL compatiable slugs on mongoose models, ensuring uniqueness.",
+  "version": "0.0.1",
+  "keywords": [
+    "mongoose slugs",
+    "mongoose url slugs",
+    "url slugs",
+    "mongodb slugs",
+    "mongodb url slugs"
+  ],
+  "homepage": "http://mindblaze.github.io/mongoose-url-slugs",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mindblaze/mongoose-url-slugs.git"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "async": "0.9.0",
+    "extend": "1.2.1"
+  }
+}
