@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Mongoose URL Slugs by mindblaze</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Mongoose URL Slugs</h1>
+        <p>Create URL compatiable slugs on mongoose models, ensuring uniqueness.</p>
+
+        <p class="view"><a href="https://github.com/mindblaze/mongoose-url-slugs">View the Project on GitHub <small>mindblaze/mongoose-url-slugs</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/mindblaze/mongoose-url-slugs/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mindblaze/mongoose-url-slugs/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mindblaze/mongoose-url-slugs">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="mongoose-url-slugs" class="anchor" href="#mongoose-url-slugs"><span class="octicon octicon-link"></span></a>Mongoose URL Slugs</h1>
+
+<p>A simple URL based slugs generation for mongoose models.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>$ npm install mongoose-url-slugs
+</code></pre>
+
+<h2>
+<a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example Usage</h2>
+
+<h3>
+<a name="example-1-using-default-options-and-merging-2-fields-for-slug-generation" class="anchor" href="#example-1-using-default-options-and-merging-2-fields-for-slug-generation"><span class="octicon octicon-link"></span></a>Example 1: Using default options and merging 2 fields for slug generation.</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose'</span><span class="p">),</span>
+    <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">,</span>
+    <span class="nx">URLSlugs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose-url-slugs'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">testSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+  <span class="nx">first_name</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span>
+  <span class="nx">last_name</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span>
+  <span class="nx">rev</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">testSchema</span><span class="p">.</span><span class="nx">plugin</span><span class="p">(</span><span class="nx">URLSlugs</span><span class="p">(</span><span class="s1">'first_name last_name'</span><span class="p">));</span>
+</pre></div>
+
+<h3>
+<a name="example-2-using-myslug-key-for-storing-slug" class="anchor" href="#example-2-using-myslug-key-for-storing-slug"><span class="octicon octicon-link"></span></a>Example 2: Using 'myslug' key for storing slug.</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose'</span><span class="p">),</span>
+    <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">,</span>
+    <span class="nx">URLSlugs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose-url-slugs'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">testSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+  <span class="nx">first_name</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span>
+  <span class="nx">last_name</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span>
+  <span class="nx">rev</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// Save slugs to 'myslug' field.</span>
+<span class="nx">testSchema</span><span class="p">.</span><span class="nx">plugin</span><span class="p">(</span><span class="nx">URLSlugs</span><span class="p">(</span><span class="s1">'first_name last_name'</span><span class="p">,</span> <span class="p">{</span><span class="nx">key</span><span class="o">:</span> <span class="s1">'myslug'</span><span class="p">}));</span>
+</pre></div>
+
+<h2>
+<a name="defaults-and-configurables" class="anchor" href="#defaults-and-configurables"><span class="octicon octicon-link"></span></a>Defaults and Configurables</h2>
+
+<ul>
+<li>
+<strong>key</strong> (Default: 'slug') - Parts that are uploaded simultaneously.</li>
+<li>
+<strong>generator(text)</strong> (Default: lowercases and then replaces all alphanumeric characters to '-') - Function to generate slug.</li>
+<li>
+<strong>index</strong> - key schema settings. (see below)</li>
+<li>- <strong>index.type</strong> (Default: String) - Mongoose schema property type.</li>
+<li>- <strong>index.trim</strong> (Default: true) - Mongoose schema property trim.</li>
+<li>- <strong>index.index</strong> (Default: true) - Mongoose schema property index.</li>
+<li>- <strong>index.unique</strong> (Default: true) - Mongoose schema property unique.</li>
+<li>- <strong>index.required</strong> (Default: true) - Mongoose schema property required.</li>
+</ul><h2>
+<a name="history" class="anchor" href="#history"><span class="octicon octicon-link"></span></a>History</h2>
+
+<ul>
+<li>v0.0.3 (2014-06-09) -- Initial release.</li>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>The MIT License (MIT)</p>
+
+<p>Copyright (c) 2014 Talha Asad</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/mindblaze">mindblaze</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-49019483-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
