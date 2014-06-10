@@ -1,7 +1,11 @@
 var extend = require('extend');
 
 function defaultURLSlugGeneration(text, separator) {
-  return text.toLowerCase().replace(/([^a-z0-9\-\_]+)/g, separator).replace(new RegExp(separator + '{2,}', 'g'), separator);
+  var slug = text.toLowerCase().replace(/([^a-z0-9\-\_]+)/g, separator).replace(new RegExp(separator + '{2,}', 'g'), separator);
+  if (slug.substr(-1) == seperator) {
+    slug = slug.substr(0, slug.length-1);
+  }
+  return slug;
 }
 
 var defaultOptions = {
