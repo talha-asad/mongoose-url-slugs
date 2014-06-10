@@ -4,30 +4,40 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Mongoose URL Slugs by mindblaze</title>
-
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/mindblaze/mongoose-url-slugs">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/mindblaze/mongoose-url-slugs/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/mindblaze/mongoose-url-slugs/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
     <div class="wrapper">
-      <header>
-        <h1>Mongoose URL Slugs</h1>
-        <p>Create URL compatiable slugs on mongoose models, ensuring uniqueness.</p>
 
-        <p class="view"><a href="https://github.com/mindblaze/mongoose-url-slugs">View the Project on GitHub <small>mindblaze/mongoose-url-slugs</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/mindblaze/mongoose-url-slugs/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/mindblaze/mongoose-url-slugs/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/mindblaze/mongoose-url-slugs">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
       <section>
+        <div id="title">
+          <h1>Mongoose URL Slugs</h1>
+          <p>Create URL compatiable slugs on mongoose models, ensuring uniqueness.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/mindblaze">mindblaze</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
         <h1>
 <a name="mongoose-url-slugs" class="anchor" href="#mongoose-url-slugs"><span class="octicon octicon-link"></span></a>Mongoose URL Slugs</h1>
 
@@ -43,7 +53,7 @@
 <a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example Usage</h2>
 
 <h3>
-<a name="example-1-using-default-options-and-merging-2-fields-for-slug-generation" class="anchor" href="#example-1-using-default-options-and-merging-2-fields-for-slug-generation"><span class="octicon octicon-link"></span></a>Example 1: Using default options and merging 2 fields for slug generation.</h3>
+<a name="example-1-using-default-options-and-using-2-fields-for-slug-generation" class="anchor" href="#example-1-using-default-options-and-using-2-fields-for-slug-generation"><span class="octicon octicon-link"></span></a>Example 1: Using default options and using 2 fields for slug generation.</h3>
 
 <div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose'</span><span class="p">),</span>
     <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">,</span>
@@ -72,7 +82,7 @@
 <span class="p">});</span>
 
 <span class="c1">// Save slugs to 'myslug' field.</span>
-<span class="nx">testSchema</span><span class="p">.</span><span class="nx">plugin</span><span class="p">(</span><span class="nx">URLSlugs</span><span class="p">(</span><span class="s1">'first_name last_name'</span><span class="p">,</span> <span class="p">{</span><span class="nx">key</span><span class="o">:</span> <span class="s1">'myslug'</span><span class="p">}));</span>
+<span class="nx">testSchema</span><span class="p">.</span><span class="nx">plugin</span><span class="p">(</span><span class="nx">URLSlugs</span><span class="p">(</span><span class="s1">'first_name last_name'</span><span class="p">,</span> <span class="p">{</span><span class="nx">field</span><span class="o">:</span> <span class="s1">'myslug'</span><span class="p">}));</span>
 </pre></div>
 
 <h2>
@@ -80,21 +90,32 @@
 
 <ul>
 <li>
-<strong>key</strong> (Default: 'slug') - Parts that are uploaded simultaneously.</li>
+<strong>field</strong> (Default: 'slug') - Parts that are uploaded simultaneously.</li>
 <li>
-<strong>generator(text)</strong> (Default: lowercases and then replaces all alphanumeric characters to '-') - Function to generate slug.</li>
+<strong>addField</strong> (Default: True) - Add slug field to mongoose schema.</li>
 <li>
-<strong>index</strong> - key schema settings. (see below)</li>
-<li>- <strong>index.type</strong> (Default: String) - Mongoose schema property type.</li>
-<li>- <strong>index.trim</strong> (Default: true) - Mongoose schema property trim.</li>
-<li>- <strong>index.index</strong> (Default: true) - Mongoose schema property index.</li>
-<li>- <strong>index.unique</strong> (Default: true) - Mongoose schema property unique.</li>
-<li>- <strong>index.required</strong> (Default: true) - Mongoose schema property required.</li>
+<strong>separator</strong> (Default: '-') - Separator to use for invalid characters.</li>
+<li>
+<strong>generator(text, separator)</strong> (Default: lowercases and then replaces all alphanumeric characters to separators) - Function to generate slug.</li>
+<li>
+<strong>update</strong> (Default: false) - Update slug when slug building fields change.</li>
+<li>
+<strong>index</strong> (Default: true) - Mark slug field as index in mongoose schema.</li>
+<li>
+<strong>index_type</strong> (Default: String) - Mongoose schema slug index type.</li>
+<li>
+<strong>index_default</strong> (Default: '') - Mongoose schema slug index default value.</li>
+<li>
+<strong>index_trim</strong> (Default: True) - Mongoose schema slug index trim value.</li>
+<li>
+<strong>index_unique</strong> (Default: True) - Mongoose schema slug index unique value.</li>
+<li>
+<strong>index_required</strong> (Default: True) - Mongoose schema slug index required value.</li>
 </ul><h2>
 <a name="history" class="anchor" href="#history"><span class="octicon octicon-link"></span></a>History</h2>
 
 <ul>
-<li>v0.0.3 (2014-06-09) -- Initial release.</li>
+<li>v0.0.4 (2014-06-10) -- Initial release.</li>
 </ul><h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
@@ -120,12 +141,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.</p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/mindblaze">mindblaze</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
