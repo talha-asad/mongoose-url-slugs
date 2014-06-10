@@ -64,7 +64,7 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 
 ## History
 
-* v0.0.4 (2014-06-10) -- Initial release.
+* v0.0.5 (2014-06-10) -- Initial release.
 
 
 ## License

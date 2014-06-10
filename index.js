@@ -33,7 +33,6 @@ module.exports = function(slugFields, options) {
     }
 
     schema.methods.ensureUniqueSlug = function (slug, cb) {
-      console.log('ensureUniqueSlug Doc:', this);
       if (!options.index_unique) return cb(null, true, slug);
       var doc = this;
       var model = doc.constructor;
@@ -66,7 +65,8 @@ module.exports = function(slugFields, options) {
 
     schema.pre('validate', function (next) {
       var doc = this;
-      if (!doc.isNew && !options.update) return next();
+      var currentSlug = doc.get(options.field, String);
+      if (!doc.isNew && !options.update && currentSlug) return next();
       
       var slugFieldsModified = doc.isNew? true : false;
       var toSlugify = '';
