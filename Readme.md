@@ -13,7 +13,7 @@ $ npm install mongoose-url-slugs
 ## Example Usage
 
 
-### Example 1: Using default options and merging 2 fields for slug generation.
+### Example 1: Using default options and using 2 fields for slug generation.
 
 ```js
 var mongoose = require('mongoose'),
@@ -43,24 +43,28 @@ var testSchema = new Schema({
 });
 
 // Save slugs to 'myslug' field.
-testSchema.plugin(URLSlugs('first_name last_name', {key: 'myslug'}));
+testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 ```
 
 
 ## Defaults and Configurables
 
-* **key** (Default: 'slug') - Parts that are uploaded simultaneously.
-* **generator(text)** (Default: lowercases and then replaces all alphanumeric characters to '-') - Function to generate slug.
-* **index** - key schema settings. (see below)
-* - **index.type** (Default: String) - Mongoose schema property type.
-* - **index.trim** (Default: true) - Mongoose schema property trim.
-* - **index.index** (Default: true) - Mongoose schema property index.
-* - **index.unique** (Default: true) - Mongoose schema property unique.
-* - **index.required** (Default: true) - Mongoose schema property required.
+* **field** (Default: 'slug') - Parts that are uploaded simultaneously.
+* **addField** (Default: True) - Add slug field to mongoose schema.
+* **separator** (Default: '-') - Separator to use for invalid characters.
+* **generator(text, separator)** (Default: lowercases and then replaces all alphanumeric characters to separators) - Function to generate slug.
+* **update** (Default: false) - Update slug when slug building fields change.
+* **index** (Default: true) - Mark slug field as index in mongoose schema.
+* **index_type** (Default: String) - Mongoose schema slug index type.
+* **index_default** (Default: '') - Mongoose schema slug index default value.
+* **index_trim** (Default: True) - Mongoose schema slug index trim value.
+* **index_unique** (Default: True) - Mongoose schema slug index unique value.
+* **index_required** (Default: True) - Mongoose schema slug index required value.
 
 
 ## History
-* v0.0.3 (2014-06-09) -- Initial release.
+
+* v0.0.4 (2014-06-10) -- Initial release.
 
 
 ## License

@@ -1,7 +1,7 @@
 # History
 
 
-## V 0.0.3 (June 09, 2014)
+## V 0.0.4 (June 10, 2014)
 * Initial release.
 
 =======

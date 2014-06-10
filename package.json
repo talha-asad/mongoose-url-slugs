@@ -6,13 +6,14 @@
   },
   "name": "mongoose-url-slugs",
   "description": "Create URL compatiable slugs on mongoose models, ensuring uniqueness.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "keywords": [
     "mongoose slugs",
     "mongoose url slugs",
     "url slugs",
     "mongodb slugs",
-    "mongodb url slugs"
+    "mongodb url slugs",
+    "mongoose"
   ],
   "homepage": "http://mindblaze.github.io/mongoose-url-slugs",
   "repository": {
