@@ -46,8 +46,12 @@ module.exports = function(slugFields, options) {
         else if (!docs.length) cb(null, true, slug);
         else {
           var max = docs.reduce(function (max, doc) {
-            var count = doc.get(options.field, String).match(new RegExp(options.separator + '([0-9]+)$'));
-            count = ((count instanceof Array)? parseInt(count[1]) : 0) + 1;
+            var docSlug = doc.get(options.field, String);
+            var count = 1;
+            if (docSlug != slug) {
+              count = docSlug.match(new RegExp(slug + options.separator + '([0-9]+)$'));
+              count = ((count instanceof Array)? parseInt(count[1]) : 0) + 1;
+            }
             return (count > max)? count : max;
           }, 0);
           if (max == 1) cb(null, false, slug + options.separator + (max + 1)); // avoid slug-1, rather do slug-2
