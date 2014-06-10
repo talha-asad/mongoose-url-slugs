@@ -64,7 +64,8 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 
 ## History
 
-* v0.0.7 (2014-06-10) -- incremented slug generation bug fix and minor optimizations.
+* v0.0.7 (2014-06-10) -- slug generation improved.
+* v0.0.6 (2014-06-10) -- incremented slug generation bug fix and minor optimizations.
 * v0.0.5 (2014-06-10) -- Initial release.
 
 
