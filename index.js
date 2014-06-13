@@ -65,10 +65,10 @@ module.exports = function(slugFields, options) {
       });
     };
     
-    schema.statics.findBySlug = function (slug, fields, options, cb) {
+    schema.statics.findBySlug = function (slug, fields, additionalOptions, cb) {
       var q = {};
       q[options.field] = slug;
-      return this.findOne(q, fields, options, cb);
+      return this.findOne(q, fields, additionalOptions, cb);
     };
 
     schema.pre('validate', function (next) {

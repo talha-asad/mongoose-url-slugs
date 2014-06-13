@@ -1,5 +1,8 @@
 # History
 
+## V 0.0.9 (June 14, 2014)
+* findBySlug bug fixed.
+
 ## V 0.0.8 (June 10, 2014)
 * slug generation improved.
 
