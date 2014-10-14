@@ -6,7 +6,7 @@
   },
   "name": "mongoose-url-slugs",
   "description": "Create URL compatiable slugs on mongoose models, ensuring uniqueness.",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "keywords": [
     "mongoose slugs",
     "mongoose url slugs",
@@ -25,6 +25,6 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "extend": "1.2.1"
+    "extend": "2.0.0"
   }
 }

@@ -1,5 +1,8 @@
 # History
 
+## V 0.0.10 (October 14, 2014)
+* Dependencies updated.
+
 ## V 0.0.9 (June 14, 2014)
 * findBySlug bug fixed.
 
