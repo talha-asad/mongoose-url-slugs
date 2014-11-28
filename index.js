@@ -19,20 +19,21 @@ var defaultOptions = {
   index_default: '',
   index_trim: true,
   index_unique: true,
-  index_required: false
+  index_required: false,
+  index_sparse: false
 };
-  
+
 module.exports = function(slugFields, options) {
   options = extend(true, defaultOptions, options);
-  
+
   if (slugFields.indexOf(' ') > -1) {
     slugFields = slugFields.split(' ');
   }
-  
+
   return (function (schema) {
     if (options.addField) {
       var schemaField = {};
-      schemaField[options.field] = {type: options.index_type, default: options.index_default, trim: options.index_trim, index: options.index, unique: options.index_unique, required: options.index_required};
+      schemaField[options.field] = {type: options.index_type, default: options.index_default, trim: options.index_trim, index: options.index, unique: options.index_unique, required: options.index_required, sparse: options.index_sparse};
       schema.add(schemaField);
     }
 
@@ -64,7 +65,7 @@ module.exports = function(slugFields, options) {
         }
       });
     };
-    
+
     schema.statics.findBySlug = function (slug, fields, additionalOptions, cb) {
       var q = {};
       q[options.field] = slug;
@@ -75,7 +76,7 @@ module.exports = function(slugFields, options) {
       var doc = this;
       var currentSlug = doc.get(options.field, String);
       if (!doc.isNew && !options.update && currentSlug) return next();
-      
+
       var slugFieldsModified = doc.isNew? true : false;
       var toSlugify = '';
       if (slugFields instanceof Array) {
@@ -90,9 +91,9 @@ module.exports = function(slugFields, options) {
         if (doc.isModified(slugFields)) slugFieldsModified = true;
         toSlugify = doc.get(slugFields, String);
       }
-      
+
       if (!slugFieldsModified) return next();
-      
+
       var newSlug = options.generator(toSlugify, options.separator);
       doc.ensureUniqueSlug(newSlug, function (e, exists, finalSlug) {
         if (e) return next(e);
@@ -100,7 +101,7 @@ module.exports = function(slugFields, options) {
         doc.markModified(options.field, finalSlug); // sometimes required :)
         next();
       });
-      
+
     });
   });
 };
