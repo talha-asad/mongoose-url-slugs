@@ -26,5 +26,13 @@
   },
   "dependencies": {
     "extend": "2.0.0"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/_mocha test"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.0.1",
+    "mongoose": "^3.8.19"
   }
 }

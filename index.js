@@ -20,7 +20,8 @@ var defaultOptions = {
   index_trim: true,
   index_unique: true,
   index_required: false,
-  index_sparse: false
+  index_sparse: false,
+  max_slug_length: null
 };
 
 module.exports = function(slugFields, options) {
@@ -59,9 +60,17 @@ module.exports = function(slugFields, options) {
             }
             return (count > max)? count : max;
           }, 0);
-          if (max == 1) cb(null, false, slug + options.separator + (max + 1)); // avoid slug-1, rather do slug-2
-          else if (max > 0) cb(null, false, slug + options.separator + max);
-          else cb(null, false, slug);
+
+          if (!max) return cb(null, false, slug);
+          if (max == 1) max++ // avoid slug-1, rather do slug-2
+
+          var suffix = options.separator + max
+
+          if (options.max_slug_length) {
+            cb(null, false, slug.substr(0, options.max_slug_length - suffix.length) + suffix);
+          } else {
+            return cb(null, false, slug + suffix)
+          }
         }
       });
     };
@@ -95,6 +104,11 @@ module.exports = function(slugFields, options) {
       if (!slugFieldsModified) return next();
 
       var newSlug = options.generator(toSlugify, options.separator);
+
+      if (options.max_slug_length) {
+        newSlug = newSlug.substr(0, options.max_slug_length)
+      }
+
       doc.ensureUniqueSlug(newSlug, function (e, exists, finalSlug) {
         if (e) return next(e);
         doc.set(options.field, finalSlug);
