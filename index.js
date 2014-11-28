@@ -13,6 +13,7 @@ var defaultOptions = {
   addField: true,
   generator: defaultURLSlugGeneration,
   separator: '-',
+  maxLength: null,
   update: false,
   index: true,
   index_type: String,
@@ -20,8 +21,7 @@ var defaultOptions = {
   index_trim: true,
   index_unique: true,
   index_required: false,
-  index_sparse: false,
-  max_slug_length: null
+  index_sparse: false
 };
 
 module.exports = function(slugFields, options) {
@@ -44,7 +44,7 @@ module.exports = function(slugFields, options) {
       var model = doc.constructor;
       var q = {};
       q[options.field] = new RegExp('^' + slug);
-      q['_id'] = {$ne: doc._id};
+      q._id = {$ne: doc._id};
       var fields = {};
       fields[options.field] = 1;
       model.find(q, fields).exec(function (e, docs) {
@@ -56,20 +56,17 @@ module.exports = function(slugFields, options) {
             var count = 1;
             if (docSlug != slug) {
               count = docSlug.match(new RegExp(slug + options.separator + '([0-9]+)$'));
-              count = ((count instanceof Array)? parseInt(count[1]) : 0) + 1;
+              count = ((count instanceof Array)? parseInt(count[1], 10) : 0) + 1;
             }
             return (count > max)? count : max;
           }, 0);
 
-          if (max == 1) max++ // avoid slug-1, rather do slug-2
+          if (max == 1) max++; // avoid slug-1, rather do slug-2
 
-          var suffix = options.separator + max
+          var suffix = options.separator + max;
 
-          if (options.max_slug_length) {
-            cb(null, false, slug.substr(0, options.max_slug_length - suffix.length) + suffix);
-          } else {
-            return cb(null, false, slug + suffix)
-          }
+          if (options.maxLength) return cb(null, false, slug.substr(0, options.maxLength - suffix.length) + suffix);
+          else return cb(null, false, slug + suffix);
         }
       });
     };
@@ -104,9 +101,7 @@ module.exports = function(slugFields, options) {
 
       var newSlug = options.generator(toSlugify, options.separator);
 
-      if (options.max_slug_length) {
-        newSlug = newSlug.substr(0, options.max_slug_length)
-      }
+      if (options.maxLength) newSlug = newSlug.substr(0, options.maxLength);
 
       doc.ensureUniqueSlug(newSlug, function (e, exists, finalSlug) {
         if (e) return next(e);

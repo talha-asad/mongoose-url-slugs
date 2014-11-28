@@ -1,5 +1,9 @@
 # History
 
+## V 0.1.0 (Novemeber 28, 2014)
+* Added option index_sparse
+* Added option maxLength
+
 ## V 0.0.10 (October 14, 2014)
 * Dependencies updated.
 

@@ -1,3 +1,9 @@
+[![Build Status](https://travis-ci.org/mindblaze/mongoose-url-slugs.png?branch=master)](https://travis-ci.org/mindblaze/mongoose-url-slugs)
+[![Dependency Status](https://www.versioneye.com/user/projects/5478679560944d12df000046/badge.svg)](https://www.versioneye.com/user/projects/5478679560944d12df000046)
+[![NPM version](https://badge.fury.io/js/mongoose-url-slugs.svg)](http://badge.fury.io/js/mongoose-url-slugs)
+
+[![NPM stats](https://nodei.co/npm/mongoose-url-slugs.png?downloads=true)](https://www.npmjs.org/package/mongoose-url-slugs)
+
 # Mongoose URL Slugs
 
 A simple URL based slugs generation for mongoose models.
@@ -49,23 +55,23 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 
 ## Defaults and Configurables
 
-* **field** (Default: 'slug') - Parts that are uploaded simultaneously.
+* **field** (Default: 'slug') - field to use for slug building/
 * **addField** (Default: True) - Add slug field to mongoose schema.
 * **separator** (Default: '-') - Separator to use for invalid characters.
-* **generator(text, separator)** (Default: lowercases and then replaces all alphanumeric characters to separators) - Function to generate slug.
-* **update** (Default: false) - Update slug when slug building fields change.
-* **index** (Default: true) - Mark slug field as index in mongoose schema.
+* **generator(text, separator)** (Default: lowercases and then replaces all non alphanumeric characters to seperator) - Function to generate slug.
+* **maxLength** (Default: null) - If set, restricts slug length to specified value.
+* **update** (Default: False) - Update slug when slug building fields change.
+* **index** (Default: True) - Mark slug field as index in mongoose schema.
 * **index_type** (Default: String) - Mongoose schema slug index type.
 * **index_default** (Default: '') - Mongoose schema slug index default value.
 * **index_trim** (Default: True) - Mongoose schema slug index trim value.
 * **index_unique** (Default: True) - Mongoose schema slug index unique value.
 * **index_required** (Default: True) - Mongoose schema slug index required value.
 * **index_sparse** (Default: False) - Mongoose schema slug index sparse value.
-* **max_slug_length** (Default: null) - If set, restricts slug length to specified value.
 
 
 ## History
-
+* v0.1.0 (2014-11-28) -- Added index_sparse, maxLength options.
 * v0.0.10 (2014-10-14) -- Dependencies updated.
 * v0.0.9 (2014-06-14) -- findBySlug bug fixed.
 * v0.0.8 (2014-06-10) -- slug generation improved.
