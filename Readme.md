@@ -60,6 +60,8 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 * **index_trim** (Default: True) - Mongoose schema slug index trim value.
 * **index_unique** (Default: True) - Mongoose schema slug index unique value.
 * **index_required** (Default: True) - Mongoose schema slug index required value.
+* **index_sparse** (Default: False) - Mongoose schema slug index sparse value.
+* **max_slug_length** (Default: null) - If set, restricts slug length to specified value.
 
 
 ## History
