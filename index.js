@@ -61,7 +61,6 @@ module.exports = function(slugFields, options) {
             return (count > max)? count : max;
           }, 0);
 
-          if (!max) return cb(null, false, slug);
           if (max == 1) max++ // avoid slug-1, rather do slug-2
 
           var suffix = options.separator + max
