@@ -6,7 +6,7 @@
 
 # Mongoose URL Slugs
 
-A simple URL based slugs generation for mongoose models.
+A simple URL based slug generator for mongoose models.
 
 
 ## Installation
