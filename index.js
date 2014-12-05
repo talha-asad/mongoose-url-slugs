@@ -40,6 +40,7 @@ module.exports = function(slugFields, options) {
 
     schema.methods.ensureUniqueSlug = function (slug, cb) {
       if (!options.index_unique) return cb(null, true, slug);
+
       var doc = this;
       var model = doc.constructor;
       var q = {};
@@ -65,11 +66,18 @@ module.exports = function(slugFields, options) {
 
           var suffix = options.separator + max;
 
-          if (options.maxLength) return cb(null, false, slug.substr(0, options.maxLength - suffix.length) + suffix);
-          else return cb(null, false, slug + suffix);
+          if (!options.maxLength) return cb(null, false, slug + suffix);
+
+          // if root slug changes because of maxLength cropping, we need to re-search the slug
+          var slugRoot = slug.substr(0, options.maxLength - suffix.length)
+          if (slugRoot != slug) {
+            doc.ensureUniqueSlug(slugRoot, cb)
+          } else {
+            return cb(null, false, slug + suffix);
+          }
         }
       });
-    };
+    }
 
     schema.statics.findBySlug = function (slug, fields, additionalOptions, cb) {
       var q = {};
@@ -101,15 +109,19 @@ module.exports = function(slugFields, options) {
 
       var newSlug = options.generator(toSlugify, options.separator);
 
-      if (options.maxLength) newSlug = newSlug.substr(0, options.maxLength);
-
-      doc.ensureUniqueSlug(newSlug, function (e, exists, finalSlug) {
-        if (e) return next(e);
-        doc.set(options.field, finalSlug);
-        doc.markModified(options.field, finalSlug); // sometimes required :)
+      if (!newSlug.length && options.index_sparse) {
+        doc.set(options.field, undefined);
         next();
-      });
+      } else {
+        if (options.maxLength) newSlug = newSlug.substr(0, options.maxLength);
 
+        doc.ensureUniqueSlug(newSlug, function (e, exists, finalSlug) {
+          if (e) return next(e);
+          doc.set(options.field, finalSlug);
+          doc.markModified(options.field, finalSlug); // sometimes required :)
+          next();
+        });
+      }
     });
   });
 };
