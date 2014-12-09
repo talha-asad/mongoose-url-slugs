@@ -4,103 +4,98 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Mongoose URL Slugs by mindblaze</title>
+
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
+    <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/mindblaze/mongoose-url-slugs">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/mindblaze/mongoose-url-slugs/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/mindblaze/mongoose-url-slugs/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
-
     <div class="wrapper">
-
+      <header>
+        <h1>Mongoose URL Slugs</h1>
+        <p>Create URL compatiable slugs on mongoose models, ensuring uniqueness.</p>
+        <p class="view"><a href="https://github.com/mindblaze/mongoose-url-slugs">View the Project on GitHub <small>mindblaze/mongoose-url-slugs</small></a></p>
+        <ul>
+          <li><a href="https://github.com/mindblaze/mongoose-url-slugs/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mindblaze/mongoose-url-slugs/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mindblaze/mongoose-url-slugs">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
       <section>
-        <div id="title">
-          <h1>Mongoose URL Slugs</h1>
-          <p>Create URL compatiable slugs on mongoose models, ensuring uniqueness.</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/mindblaze">mindblaze</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
+        <p><a href="https://travis-ci.org/mindblaze/mongoose-url-slugs"><img src="https://travis-ci.org/mindblaze/mongoose-url-slugs.png?branch=master" alt="Build Status"></a>
+<a href="https://www.versioneye.com/user/projects/5478679560944d12df000046"><img src="https://www.versioneye.com/user/projects/5478679560944d12df000046/badge.svg" alt="Dependency Status"></a>
+<a href="http://badge.fury.io/js/mongoose-url-slugs"><img src="https://badge.fury.io/js/mongoose-url-slugs.svg" alt="NPM version"></a></p>
 
-        <h1>
-<a name="mongoose-url-slugs" class="anchor" href="#mongoose-url-slugs"><span class="octicon octicon-link"></span></a>Mongoose URL Slugs</h1>
+<p><a href="https://www.npmjs.org/package/mongoose-url-slugs"><img src="https://nodei.co/npm/mongoose-url-slugs.png?downloads=true" alt="NPM stats"></a></p>
 
-<p>A simple URL based slugs generation for mongoose models.</p>
+<h1>
+<a id="mongoose-url-slugs" class="anchor" href="#mongoose-url-slugs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mongoose URL Slugs</h1>
+
+<p>A simple URL based slug generator for mongoose models.</p>
 
 <h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <pre><code>$ npm install mongoose-url-slugs
 </code></pre>
 
 <h2>
-<a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example Usage</h2>
+<a id="example-usage" class="anchor" href="#example-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Usage</h2>
 
 <h3>
-<a name="example-1-using-default-options-and-using-2-fields-for-slug-generation" class="anchor" href="#example-1-using-default-options-and-using-2-fields-for-slug-generation"><span class="octicon octicon-link"></span></a>Example 1: Using default options and using 2 fields for slug generation.</h3>
+<a id="example-1-using-default-options-and-using-2-fields-for-slug-generation" class="anchor" href="#example-1-using-default-options-and-using-2-fields-for-slug-generation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example 1: Using default options and using 2 fields for slug generation.</h3>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose'</span><span class="p">),</span>
-    <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">,</span>
-    <span class="nx">URLSlugs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose-url-slugs'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> mongoose <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>mongoose<span class="pl-pds">'</span></span>),
+    Schema <span class="pl-k">=</span> mongoose.Schema,
+    URLSlugs <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>mongoose-url-slugs<span class="pl-pds">'</span></span>);
 
-<span class="kd">var</span> <span class="nx">testSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
-  <span class="nx">first_name</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span>
-  <span class="nx">last_name</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span>
-  <span class="nx">rev</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span>
-<span class="p">});</span>
+<span class="pl-s">var</span> testSchema <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Schema</span>({
+  first_name<span class="pl-k">:</span> {type<span class="pl-k">:</span> <span class="pl-s3">String</span>, <span class="pl-k">default</span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, trim<span class="pl-k">:</span> <span class="pl-c1">true</span>},
+  last_name<span class="pl-k">:</span> {type<span class="pl-k">:</span> <span class="pl-s3">String</span>, <span class="pl-k">default</span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, trim<span class="pl-k">:</span> <span class="pl-c1">true</span>},
+  rev<span class="pl-k">:</span> {type<span class="pl-k">:</span> <span class="pl-s3">String</span>, <span class="pl-k">default</span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, trim<span class="pl-k">:</span> <span class="pl-c1">true</span>}
+});
 
-<span class="nx">testSchema</span><span class="p">.</span><span class="nx">plugin</span><span class="p">(</span><span class="nx">URLSlugs</span><span class="p">(</span><span class="s1">'first_name last_name'</span><span class="p">));</span>
-</pre></div>
+testSchema.plugin(URLSlugs(<span class="pl-s1"><span class="pl-pds">'</span>first_name last_name<span class="pl-pds">'</span></span>));</pre></div>
 
 <h3>
-<a name="example-2-using-myslug-key-for-storing-slug" class="anchor" href="#example-2-using-myslug-key-for-storing-slug"><span class="octicon octicon-link"></span></a>Example 2: Using 'myslug' key for storing slug.</h3>
+<a id="example-2-using-myslug-key-for-storing-slug" class="anchor" href="#example-2-using-myslug-key-for-storing-slug" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example 2: Using 'myslug' key for storing slug.</h3>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose'</span><span class="p">),</span>
-    <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">,</span>
-    <span class="nx">URLSlugs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose-url-slugs'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> mongoose <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>mongoose<span class="pl-pds">'</span></span>),
+    Schema <span class="pl-k">=</span> mongoose.Schema,
+    URLSlugs <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>mongoose-url-slugs<span class="pl-pds">'</span></span>);
 
-<span class="kd">var</span> <span class="nx">testSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
-  <span class="nx">first_name</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span>
-  <span class="nx">last_name</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span>
-  <span class="nx">rev</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">trim</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span>
-<span class="p">});</span>
+<span class="pl-s">var</span> testSchema <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Schema</span>({
+  first_name<span class="pl-k">:</span> {type<span class="pl-k">:</span> <span class="pl-s3">String</span>, <span class="pl-k">default</span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, trim<span class="pl-k">:</span> <span class="pl-c1">true</span>},
+  last_name<span class="pl-k">:</span> {type<span class="pl-k">:</span> <span class="pl-s3">String</span>, <span class="pl-k">default</span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, trim<span class="pl-k">:</span> <span class="pl-c1">true</span>},
+  rev<span class="pl-k">:</span> {type<span class="pl-k">:</span> <span class="pl-s3">String</span>, <span class="pl-k">default</span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, trim<span class="pl-k">:</span> <span class="pl-c1">true</span>}
+});
 
-<span class="c1">// Save slugs to 'myslug' field.</span>
-<span class="nx">testSchema</span><span class="p">.</span><span class="nx">plugin</span><span class="p">(</span><span class="nx">URLSlugs</span><span class="p">(</span><span class="s1">'first_name last_name'</span><span class="p">,</span> <span class="p">{</span><span class="nx">field</span><span class="o">:</span> <span class="s1">'myslug'</span><span class="p">}));</span>
-</pre></div>
+<span class="pl-c">// Save slugs to 'myslug' field.</span>
+testSchema.plugin(URLSlugs(<span class="pl-s1"><span class="pl-pds">'</span>first_name last_name<span class="pl-pds">'</span></span>, {field<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>myslug<span class="pl-pds">'</span></span>}));</pre></div>
 
 <h2>
-<a name="defaults-and-configurables" class="anchor" href="#defaults-and-configurables"><span class="octicon octicon-link"></span></a>Defaults and Configurables</h2>
+<a id="default-options" class="anchor" href="#default-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Default options</h2>
 
 <ul>
 <li>
-<strong>field</strong> (Default: 'slug') - Parts that are uploaded simultaneously.</li>
+<strong>field</strong> (Default: 'slug') - Slug field to use for storage.</li>
 <li>
 <strong>addField</strong> (Default: True) - Add slug field to mongoose schema.</li>
 <li>
 <strong>separator</strong> (Default: '-') - Separator to use for invalid characters.</li>
 <li>
-<strong>generator(text, separator)</strong> (Default: lowercases and then replaces all alphanumeric characters to separators) - Function to generate slug.</li>
+<strong>generator(text, separator)</strong> (Default: lowercases and then replaces all non alphanumeric characters to seperator) - Function to generate slug.</li>
 <li>
-<strong>update</strong> (Default: false) - Update slug when slug building fields change.</li>
+<strong>maxLength</strong> (Default: null) - If set, restricts slug length to specified value.</li>
 <li>
-<strong>index</strong> (Default: true) - Mark slug field as index in mongoose schema.</li>
+<strong>update</strong> (Default: False) - Update slug when slug building fields change.</li>
+<li>
+<strong>index</strong> (Default: True) - Mark slug field as index in mongoose schema.</li>
 <li>
 <strong>index_type</strong> (Default: String) - Mongoose schema slug index type.</li>
 <li>
@@ -111,15 +106,25 @@
 <strong>index_unique</strong> (Default: True) - Mongoose schema slug index unique value.</li>
 <li>
 <strong>index_required</strong> (Default: True) - Mongoose schema slug index required value.</li>
-</ul><h2>
-<a name="history" class="anchor" href="#history"><span class="octicon octicon-link"></span></a>History</h2>
+<li>
+<strong>index_sparse</strong> (Default: False) - Mongoose schema slug index sparse value.</li>
+</ul>
+
+<h2>
+<a id="history" class="anchor" href="#history" aria-hidden="true"><span class="octicon octicon-link"></span></a>History</h2>
 
 <ul>
+<li>v0.1.1 (2014-12-09) -- Fixed an issue due to maxLength.</li>
+<li>v0.1.0 (2014-11-28) -- Added index_sparse, maxLength options.</li>
+<li>v0.0.10 (2014-10-14) -- Dependencies updated.</li>
+<li>v0.0.9 (2014-06-14) -- findBySlug bug fixed.</li>
 <li>v0.0.8 (2014-06-10) -- slug generation improved.</li>
 <li>v0.0.6 (2014-06-10) -- incremented slug generation bug fix and minor optimizations.</li>
 <li>v0.0.5 (2014-06-10) -- Initial release.</li>
-</ul><h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>The MIT License (MIT)</p>
 
@@ -143,8 +148,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.</p>
       </section>
-
     </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/mindblaze">mindblaze</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
