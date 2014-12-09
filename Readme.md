@@ -53,9 +53,9 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 ```
 
 
-## Defaults and Configurables
+## Option defaults and configurables
 
-* **field** (Default: 'slug') - field to use for slug building/
+* **field** (Default: 'slug') - Slug field to use for storage.
 * **addField** (Default: True) - Add slug field to mongoose schema.
 * **separator** (Default: '-') - Separator to use for invalid characters.
 * **generator(text, separator)** (Default: lowercases and then replaces all non alphanumeric characters to seperator) - Function to generate slug.
@@ -71,6 +71,7 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 
 
 ## History
+* v0.1.1 (2014-12-09) -- Fixed an issue due to maxLength.
 * v0.1.0 (2014-11-28) -- Added index_sparse, maxLength options.
 * v0.0.10 (2014-10-14) -- Dependencies updated.
 * v0.0.9 (2014-06-14) -- findBySlug bug fixed.

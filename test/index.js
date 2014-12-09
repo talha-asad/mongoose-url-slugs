@@ -9,10 +9,10 @@ mongoose.connection.on('error', function(err) {
   console.error('Make sure a mongoDB server is running and accessible by this application');
 });
 
-var maxLength     = 20,
-    TestObjSchema = new mongoose.Schema({ name : String });
+var maxLength = 20,
+    TestObjSchema = new mongoose.Schema({name: String});
 
-TestObjSchema.plugin(urlSlugs('name', { maxLength : maxLength }));
+TestObjSchema.plugin(urlSlugs('name', {maxLength: maxLength}));
 
 var TestObj = mongoose.model('test_obj', TestObjSchema);
 
@@ -38,9 +38,9 @@ describe('mongoose-url-slugs', function() {
   });
 
   it('works', function(done) {
-    TestObj.create({ name : 'cool stuff' }, function(err, obj) {
+    TestObj.create({name: 'cool stuff'}, function(err, obj) {
       expect(obj.slug).to.equal('cool-stuff');
-      TestObj.create({ name : 'cool stuff' }, function(err, obj) {
+      TestObj.create({name: 'cool stuff'}, function(err, obj) {
         expect(obj.slug).to.equal('cool-stuff-2');
         done();
       });

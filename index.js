@@ -40,10 +40,12 @@ module.exports = function(slugFields, options) {
 
     schema.methods.ensureUniqueSlug = function (slug, cb) {
       if (!options.index_unique) return cb(null, true, slug);
-      var doc = this;
-      var model = doc.constructor;
-      var q = {};
-      q[options.field] = new RegExp('^' + slug);
+      var doc = this,
+          model = doc.constructor,
+          slugLimited = (options.maxLength && slug.length == options.maxLength)? true : false,
+          q = {};
+      
+      q[options.field] = new RegExp('^' + (slugLimited? slug.substr(0, slug.length - 2) : slug));
       q._id = {$ne: doc._id};
       var fields = {};
       fields[options.field] = 1;
@@ -55,7 +57,7 @@ module.exports = function(slugFields, options) {
             var docSlug = doc.get(options.field, String);
             var count = 1;
             if (docSlug != slug) {
-              count = docSlug.match(new RegExp(slug + options.separator + '([0-9]+)$'));
+              count = docSlug.match(new RegExp((slugLimited? slug.substr(0, slug.length - 2) : slug) + options.separator + '([0-9]+)$'));
               count = ((count instanceof Array)? parseInt(count[1], 10) : 0) + 1;
             }
             return (count > max)? count : max;
