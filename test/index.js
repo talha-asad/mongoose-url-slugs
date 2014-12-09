@@ -9,7 +9,7 @@ mongoose.connection.on('error', function(err) {
   console.error('Make sure a mongoDB server is running and accessible by this application');
 });
 
-var maxLength = 20,
+var maxLength = 30,
     TestObjSchema = new mongoose.Schema({name: String});
 
 TestObjSchema.plugin(urlSlugs('name', {maxLength: maxLength}));
