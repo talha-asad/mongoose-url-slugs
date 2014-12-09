@@ -103,6 +103,11 @@ module.exports = function(slugFields, options) {
 
       var newSlug = options.generator(toSlugify, options.separator);
 
+      if (!newSlug.length && options.index_sparse) {
+        doc.set(options.field, undefined);
+        return next();
+      }
+      
       if (options.maxLength) newSlug = newSlug.substr(0, options.maxLength);
 
       doc.ensureUniqueSlug(newSlug, function (e, exists, finalSlug) {
