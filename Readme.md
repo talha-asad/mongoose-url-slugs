@@ -53,7 +53,7 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 ```
 
 
-## Option defaults and configurables
+## Default options
 
 * **field** (Default: 'slug') - Slug field to use for storage.
 * **addField** (Default: True) - Add slug field to mongoose schema.
