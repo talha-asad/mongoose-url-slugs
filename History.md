@@ -1,5 +1,8 @@
 # History
 
+## V 0.1.2 (December 9, 2014)
+* Fixed an issue with index_sparse.
+
 ## V 0.1.1 (December 9, 2014)
 * Fixed an issue due to maxLength
 
