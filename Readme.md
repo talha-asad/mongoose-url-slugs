@@ -89,6 +89,7 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 
 
 ## History
+* v0.1.3 (2015-04-23) -- Fixed an issue with default options being overwritten.
 * v0.1.2 (2014-12-09) -- Fixed an issue with index_sparse.
 * v0.1.1 (2014-12-09) -- Fixed an issue due to maxLength.
 * v0.1.0 (2014-11-28) -- Added index_sparse, maxLength options.
@@ -103,7 +104,7 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Talha Asad
+Copyright (c) 2015 Talha Asad
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

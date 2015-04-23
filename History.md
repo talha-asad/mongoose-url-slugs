@@ -1,5 +1,9 @@
 # History
 
+## V 0.1.3 (April 23, 2014)
+* Fixed an issue with default options being overwritten.
+* Dependencies updated.
+
 ## V 0.1.2 (December 9, 2014)
 * Fixed an issue with index_sparse.
 
