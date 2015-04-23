@@ -25,7 +25,7 @@ var defaultOptions = {
 };
 
 module.exports = function(slugFields, options) {
-  options = extend(true, defaultOptions, options);
+  options = extend(true, {}, defaultOptions, options);
 
   if (slugFields.indexOf(' ') > -1) {
     slugFields = slugFields.split(' ');
