@@ -1,5 +1,8 @@
 # History
 
+## V 0.1.4 (September 15, 2015)
+* Dependencies updated.
+
 ## V 0.1.3 (April 23, 2014)
 * Fixed an issue with default options being overwritten.
 * Dependencies updated.
