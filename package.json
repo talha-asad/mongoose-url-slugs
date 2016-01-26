@@ -1,12 +1,12 @@
 {
   "author": {
     "name": "Talha Asad",
-    "email": "talha.asad@agiledevs.com",
-    "url": "http://mindblaze.net"
+    "email": "talha@fallentech.com",
+    "url": "http://fallentech.com"
   },
   "name": "mongoose-url-slugs",
   "description": "Create URL compatiable slugs on mongoose models, ensuring uniqueness.",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "keywords": [
     "mongoose slugs",
     "mongoose url slugs",

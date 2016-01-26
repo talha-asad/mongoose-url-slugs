@@ -15,6 +15,26 @@ A simple URL based slug generator for mongoose models.
 $ npm install mongoose-url-slugs
 ```
 
+-## What is a Slug?
+ -
+ -A slug is a human-readable unique identifier that can be used in a URL instead of an ID or hash. This is common in content sites where the title of the article is "slugified" to turn this ugly URL
+ -
+ -> http://example.com/a12Qv09b4
+ -
+ -into this pretty one
+ -
+ -> http://example.com/your-article-title-here
+ -    
+ -## How Slugs are Formatted
+ -    
+ -When supplied with a string, the following steps are taken to transform it into a slug.
+ -    
+ -- Accented characters are converted to regular equivalent characters.
+ -- Converted to lower case
+ -- All punctuation is removed
+ -- All spaces are replaced with dashes
+ -- Add a number to the end if the slug isn't unique (eg: `my-cool-slug` and `my-cool-slug-2`)
+
 
 ## Example Usage
 

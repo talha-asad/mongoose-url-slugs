@@ -1,5 +1,8 @@
 # History
 
+## V 0.1.7 (January 26, 2016)
+* Improved Readme.
+
 ## V 0.1.6 (January 26, 2016)
 * Fixed Readme.
 
