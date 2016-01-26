@@ -6,7 +6,7 @@
   },
   "name": "mongoose-url-slugs",
   "description": "Create URL compatiable slugs on mongoose models, ensuring uniqueness.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "keywords": [
     "mongoose slugs",
     "mongoose url slugs",
@@ -25,14 +25,14 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "extend": "2.0.0"
+    "extend": "3.0.0"
   },
   "scripts": {
     "test": "./node_modules/mocha/bin/_mocha test"
   },
   "devDependencies": {
-    "chai": "^3.2.0",
-    "mocha": "^2.3.2",
-    "mongoose": "^4.1.7"
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4",
+    "mongoose": "^4.3.7"
   }
 }

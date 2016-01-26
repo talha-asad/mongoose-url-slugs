@@ -1,9 +1,13 @@
 # History
 
+## V 0.1.5 (January 26, 2016)
+* Added support for accented characters.
+* Dependencies updated.
+
 ## V 0.1.4 (September 15, 2015)
 * Dependencies updated.
 
-## V 0.1.3 (April 23, 2014)
+## V 0.1.3 (April 23, 2015)
 * Fixed an issue with default options being overwritten.
 * Dependencies updated.
 
