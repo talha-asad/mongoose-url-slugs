@@ -69,21 +69,6 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 * **index_required** (Default: True) - Mongoose schema slug index required value.
 * **index_sparse** (Default: False) - Mongoose schema slug index sparse value.
 
-
-## History
-
-* v0.1.4 (2015-09-15) -- Dependencies updated.
-* v0.1.3 (2014-04-23) -- Dependencies updated.
-* v0.1.2 (2014-12-09) -- Fixed an issue with index_sparse.
-* v0.1.1 (2014-12-09) -- Fixed an issue due to maxLength.
-* v0.1.0 (2014-11-28) -- Added index_sparse, maxLength options.
-* v0.0.10 (2014-10-14) -- Dependencies updated.
-* v0.0.9 (2014-06-14) -- findBySlug bug fixed.
-* v0.0.8 (2014-06-10) -- slug generation improved.
-* v0.0.6 (2014-06-10) -- incremented slug generation bug fix and minor optimizations.
-* v0.0.5 (2014-06-10) -- Initial release.
-
-
 ## License
 
 The MIT License (MIT)

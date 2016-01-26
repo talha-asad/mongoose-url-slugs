@@ -1,5 +1,8 @@
 # History
 
+## V 0.1.6 (January 26, 2016)
+* Fixed Readme.
+
 ## V 0.1.5 (January 26, 2016)
 * Added support for accented characters.
 * Dependencies updated.
