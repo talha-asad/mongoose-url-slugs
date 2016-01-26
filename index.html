@@ -46,6 +46,34 @@
 </code></pre>
 
 <h2>
+<a id="what-is-a-slug" class="anchor" href="#what-is-a-slug" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is a Slug?</h2>
+
+<p>A slug is a human-readable unique identifier that can be used in a URL instead of an ID or hash. This is common in content sites where the title of the article is "slugified" to turn this ugly URL</p>
+
+<blockquote>
+<p><a href="http://example.com/a12Qv09b4">http://example.com/a12Qv09b4</a></p>
+</blockquote>
+
+<p>into this pretty one</p>
+
+<blockquote>
+<p><a href="http://example.com/your-article-title-here">http://example.com/your-article-title-here</a></p>
+</blockquote>
+
+<h2>
+<a id="how-slugs-are-formatted" class="anchor" href="#how-slugs-are-formatted" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How Slugs are Formatted</h2>
+
+<p>When supplied with a string, the following steps are taken to transform it into a slug.</p>
+
+<ul>
+<li>Accented characters are converted to regular equivalent characters.</li>
+<li>Converted to lower case</li>
+<li>All punctuation is removed</li>
+<li>All spaces are replaced with dashes</li>
+<li>Add a number to the end if the slug isn't unique (eg: <code>my-cool-slug</code> and <code>my-cool-slug-2</code>)</li>
+</ul>
+
+<h2>
 <a id="example-usage" class="anchor" href="#example-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example Usage</h2>
 
 <h3>
