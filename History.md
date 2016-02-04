@@ -1,13 +1,10 @@
 # History
 
-## V 0.2.0 (January 28, 2016)
-* Fixed NPM package, seemed to miss the main index.js file.
+## V 0.2.1 (February 4, 2016)
+* Add files key to package.json
 
-## V 0.1.9 (January 26, 2016)
-* Improved Readme.
-
-## V 0.1.8 (January 26, 2016)
-* Improved Readme.
+## V 0.1.8 - 0.2.0 (Removed)
+* Had issues with NPM v3
 
 ## V 0.1.7 (January 26, 2016)
 * Improved Readme.
