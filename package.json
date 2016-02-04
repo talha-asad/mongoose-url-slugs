@@ -21,6 +21,10 @@
     "url": "git://github.com/mindblaze/mongoose-url-slugs.git"
   },
   "main": "index.js",
+  "files": [
+    "Readme.md",
+    "index.js"
+  ],
   "engines": {
     "node": ">=0.10.0"
   },
