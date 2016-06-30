@@ -120,70 +120,57 @@ var defaultOptions = {
 	index_sparse: false
 };
 
-var saveQueue = {
-	tasks: {},
-	push: function(doc, toSlugify, callback) {
-		if (!saveQueue.tasks[toSlugify]) {
-			saveQueue.tasks[toSlugify] = {
-				processing: false,
-				items: []
-			};
-		}
-		saveQueue.tasks[toSlugify].items.push({
-			doc: doc,
-			cb: callback
-		});
-
-		saveQueue.process(toSlugify);
-	},
-	process: function(slug) {
-		if (!saveQueue.tasks[slug].processing) {
-			saveQueue.tasks[slug].processing = true;
-			var item = saveQueue.tasks[slug].items.splice(0, 1)[0];
-			item.doc.save(function(error, returnedDoc) {
-				setImmediate(function() {
-					item.cb(error, returnedDoc);
-				});
-				if (saveQueue.tasks[slug].items.length > 0) {
-					saveQueue.tasks[slug].processing = false;
-					saveQueue.process(slug);
-				}
-				else {
-					delete saveQueue.tasks[slug];
-				}
-			});
-		}
-	}
-};
-
-function preSlugify(doc, slugFields) {
-	var slugFieldsModified = doc.isNew;
-	var toSlugify = '';
-	if (slugFields instanceof Array) {
-		for (var i = 0; i < slugFields.length; i++) {
-			var slugField = slugFields[i];
-			if (doc.isModified(slugField)) slugFieldsModified = true;
-			var slugPart = doc.get(slugField, String);
-			if (slugPart) toSlugify += slugPart + ' ';
-		}
-		toSlugify = toSlugify.substr(0, toSlugify.length - 1);
-	} else {
-		if (doc.isModified(slugFields)) slugFieldsModified = true;
-		toSlugify = doc.get(slugFields, String);
-	}
-
-	return {
-		toSlugify: toSlugify,
-		slugFieldsModified: slugFieldsModified
-	};
-}
-
 module.exports = function(slugFields, options) {
 	options = extend(true, {}, defaultOptions, options);
 
 	if (slugFields.indexOf(' ') > -1) {
 		slugFields = slugFields.split(' ');
 	}
+
+	var saveQueue = {
+		tasks: {},
+		push: function(doc, callback) {
+			var slug = doc.slugify();
+			if (!saveQueue.tasks[slug]) {
+				saveQueue.tasks[slug] = {
+					processing: false,
+					items: []
+				};
+			}
+			saveQueue.tasks[slug].items.push({
+				doc: doc,
+				cb: callback
+			});
+
+			saveQueue.process(slug);
+		},
+		process: function(slug) {
+			if (!saveQueue.tasks[slug].processing) {
+				saveQueue.tasks[slug].processing = true;
+				var item = saveQueue.tasks[slug].items.splice(0, 1)[0];
+				item.doc.ensureUniqueSlug(slug, function(e, finalSlug) {
+					var completeProcess = function(error, returnedDoc) {
+						setImmediate(function() {
+							item.cb(error, returnedDoc);
+						});
+						if (saveQueue.tasks[slug].items.length > 0) {
+							saveQueue.tasks[slug].processing = false;
+							saveQueue.process(slug);
+						}
+						else {
+							delete saveQueue.tasks[slug];
+						}
+					}
+					if (e) return completeProcess(e)
+
+					item.doc.set(options.field, finalSlug);
+					item.doc.markModified(options.field, finalSlug); // sometimes required :)
+					
+					item.doc.save(completeProcess);
+				});
+			}
+		}
+	};
 
 	return (function(schema) {
 		if (options.addField) {
@@ -229,8 +216,7 @@ module.exports = function(slugFields, options) {
 
 		schema.methods.saveUnique = function(doc, callback) {
 			return new Promise(function(resolve, reject) {
-				var toSlugify = preSlugify(doc, slugFields).toSlugify;
-				saveQueue.push(doc, toSlugify, function(error, returnedDoc) {
+				saveQueue.push(doc, function(error, returnedDoc) {
 					if (error) {
 						callback && callback(error);
 						reject(error);
@@ -241,39 +227,65 @@ module.exports = function(slugFields, options) {
 			});
 		}
 
-		schema.statics.findBySlug = function(slug, fields, additionalOptions, cb) {
-			var q = {};
-			q[options.field] = slug;
-			return this.findOne(q, fields, additionalOptions, cb);
-		};
-
-		schema.pre('validate', function(next) {
+		schema.methods.slugify = function() {
 			var doc = this;
 			var currentSlug = doc.get(options.field, String);
-			if (!doc.isNew && !options.update && currentSlug) return next();
+			if (!doc.isNew && !options.update && currentSlug) return null;
 
-			var preVars = preSlugify(doc, slugFields);
-			var slugFieldsModified = preVars.slugFieldsModified;
-			var toSlugify = preVars.toSlugify;
+			var slugFieldsModified = doc.isNew;
+			var toSlugify = '';
+			if (slugFields instanceof Array) {
+				for (var i = 0; i < slugFields.length; i++) {
+					var slugField = slugFields[i];
+					if (doc.isModified(slugField)) slugFieldsModified = true;
+					var slugPart = doc.get(slugField, String);
+					if (slugPart) toSlugify += slugPart + ' ';
+				}
+				toSlugify = toSlugify.substr(0, toSlugify.length - 1);
+			} else {
+				if (doc.isModified(slugFields)) slugFieldsModified = true;
+				toSlugify = doc.get(slugFields, String);
+			}
 			
-			if (!slugFieldsModified) return next();
+			if (!slugFieldsModified) return toSlugify;
 
 			var newSlug = options.generator(removeDiacritics(toSlugify), options.separator);
 
 			if (!newSlug.length && options.index_sparse) {
 				doc.set(options.field, undefined);
-				return next();
+				return newSlug;
 			}
 			
 			if (options.maxLength) newSlug = newSlug.substr(0, options.maxLength);
 
+			return newSlug;
+		}
+
+		function validateUpdate(doc, next) {
+			var slug = doc.slugify();
 			doc.ensureUniqueSlug(newSlug, function(e, finalSlug) {
 				if (e) return next(e);
 				doc.set(options.field, finalSlug);
 				doc.markModified(options.field, finalSlug); // sometimes required :)
 				next();
 			});
+		}
 
+		schema.pre('update', function(next) {
+			var doc = this;
+			validateUpdate(doc, next);
 		});
+
+		schema.pre('findOneAndUpdate', function(next) {
+			var doc = this;
+			validateUpdate(doc, next);
+		});
+
+		schema.statics.findBySlug = function(slug, fields, additionalOptions, cb) {
+			var q = {};
+			q[options.field] = slug;
+			return this.findOne(q, fields, additionalOptions, cb);
+		};
+
 	});
 };
