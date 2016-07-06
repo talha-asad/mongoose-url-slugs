@@ -195,7 +195,7 @@ module.exports = function(slugFields, options) {
         toSlugify = doc.get(slugFields, String);
       }
 
-      if (!slugFieldsModified) return next();
+      if (!slugFieldsModified && currentSlug) return next();
 
       var newSlug = options.generator(removeDiacritics(toSlugify), options.separator);
 
