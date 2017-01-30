@@ -117,7 +117,8 @@ var defaultOptions = {
   index_trim: true,
   index_unique: true,
   index_required: false,
-  index_sparse: false
+  index_sparse: false,
+  recreate: false
 };
 
 module.exports = function(slugFields, options) {
@@ -178,9 +179,15 @@ module.exports = function(slugFields, options) {
     schema.pre('validate', function(next) {
       var doc = this;
       var currentSlug = doc.get(options.field, String);
-      if (!doc.isNew && !options.update && currentSlug) return next();
-
       var slugFieldsModified = doc.isNew;
+      if (doc.recreate) {
+        slugFieldsModified = true;
+      } else {
+        if (!doc.isNew && !options.update && currentSlug) {
+          return next();
+        }
+      }
+
       var toSlugify = '';
       if (slugFields instanceof Array) {
         for (var i = 0; i < slugFields.length; i++) {
