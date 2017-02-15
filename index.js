@@ -108,6 +108,7 @@ var defaultOptions = {
   field: 'slug',
   addField: true,
   generator: defaultURLSlugGeneration,
+  onHook: 'validate',
   separator: '-',
   maxLength: null,
   update: false,
@@ -141,7 +142,7 @@ module.exports = function(slugFields, options) {
           slugLimited = (options.maxLength && slug.length === options.maxLength),
           q = {},
           fields = {};
-      
+
       q._id = {$ne: doc._id};
       q[options.field] = new RegExp('^' + (slugLimited ? slug.substr(0, slug.length - 2) : slug));
       fields[options.field] = 1;
@@ -175,7 +176,7 @@ module.exports = function(slugFields, options) {
       return this.findOne(q, fields, additionalOptions, cb);
     };
 
-    schema.pre('validate', function(next) {
+    schema.pre(options.onHook, function(next) {
       var doc = this;
       var currentSlug = doc.get(options.field, String);
       if (!doc.isNew && !options.update && currentSlug) return next();
@@ -203,7 +204,7 @@ module.exports = function(slugFields, options) {
         doc.set(options.field, undefined);
         return next();
       }
-      
+
       if (options.maxLength) newSlug = newSlug.substr(0, options.maxLength);
 
       doc.ensureUniqueSlug(newSlug, function(e, finalSlug) {
