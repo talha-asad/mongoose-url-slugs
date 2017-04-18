@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/mindblaze/mongoose-url-slugs.png?branch=master)](https://travis-ci.org/mindblaze/mongoose-url-slugs)
-[![Dependency Status](https://www.versioneye.com/user/projects/56a7673f7e03c7003ba3fc11/badge.svg)](https://www.versioneye.com/user/projects/56a7673f7e03c7003ba3fc11)
+[![Build Status](https://travis-ci.org/talha-asad/mongoose-url-slugs.svg?branch=master)](https://travis-ci.org/talha-asad/mongoose-url-slugs)
 [![NPM version](https://badge.fury.io/js/mongoose-url-slugs.svg)](http://badge.fury.io/js/mongoose-url-slugs)
 
 [![NPM stats](https://nodei.co/npm/mongoose-url-slugs.png?downloads=true)](https://www.npmjs.org/package/mongoose-url-slugs)

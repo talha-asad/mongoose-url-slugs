@@ -1,6 +1,6 @@
 # History
 
-## V 0.2.2 (April 18, 2017)
+## V 0.3.0 (April 18, 2017)
 * Added onHook option (mtimofiiv)
 * Updated dependencies
 
