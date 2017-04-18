@@ -91,7 +91,7 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 * **indexUnique** (Default: True) - Mongoose schema slug index unique value.
 * **indexRequired** (Default: True) - Mongoose schema slug index required value.
 * **indexSparse** (Default: False) - Mongoose schema slug index sparse value.
-* **onHook** (Default: 'validate') - Mongoose document hook to update slug.
+* **onHook** (Default: 'validate') - Mongoose document hook to create/update slug.
 
 ## License
 
