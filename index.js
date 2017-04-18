@@ -110,6 +110,7 @@ var defaultOptions = {
   generator: defaultURLSlugGeneration,
   onHook: 'validate',
   separator: '-',
+  undefinedVal: 'undefined',
   maxLength: null,
   update: false,
   alwaysRecreate: false,
@@ -191,7 +192,12 @@ module.exports = function(slugFields, options) {
       var doc = this;
       var currentSlug = doc.get(options.field, String);
       var slugFieldsModified = doc.isNew;
+      
+      // Skip if it's an edit and the plugin is configured to not update.
       if (!doc.isNew && !options.update && currentSlug) return next();
+      
+      // Skip if it's an edit and the user explicitly sets a slug and plugin is not configured to always recreate slug.
+      else if (!doc.isNew && doc.isModified(options.field) && currentSlug && !options.alwaysRecreate) return next();
 
       var toSlugify = '';
       if (slugFields instanceof Array) {
@@ -199,19 +205,22 @@ module.exports = function(slugFields, options) {
           var slugField = slugFields[i];
           if (doc.isModified(slugField)) slugFieldsModified = true;
           var slugPart = doc.get(slugField, String);
-          if (slugPart) toSlugify += slugPart + ' ';
+          if (slugPart !== undefined) toSlugify += slugPart + ' ';
         }
-        toSlugify = toSlugify.substr(0, toSlugify.length - 1);
+        if (toSlugify.length) toSlugify = toSlugify.substr(0, toSlugify.length - 1);
+        else toSlugify = options.undefinedVal;
       } else {
         if (doc.isModified(slugFields)) slugFieldsModified = true;
-        toSlugify = doc.get(slugFields, String);
+        var slugPart = doc.get(slugFields, String);
+        if (slugPart !== undefined) toSlugify += slugPart;
+        if (!toSlugify.length) toSlugify = options.undefinedVal;
       }
 
       if (!options.alwaysRecreate && !slugFieldsModified && currentSlug) return next();
 
       var newSlug = options.generator(removeDiacritics(toSlugify), options.separator);
       
-      if (newSlug.length === 0 && options.indexSparse) {
+      if (options.indexSparse && newSlug === options.undefinedVal) {
         doc.set(options.field, undefined);
         doc.markModified(options.field); // sometimes required :)
         return next();

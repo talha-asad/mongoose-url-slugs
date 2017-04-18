@@ -3,6 +3,7 @@
 ## V 1.0.0 (April 18, 2017)
 * *BREAKING CHANGES*
 * Added alwaysRecreate ((https://github.com/PeterJausovec)PeterJausovec)
+* Added undefinedVal option.
 * Added additional tests ((https://github.com/phillee)phillee)
 
 ## V 0.3.0 (April 18, 2017)

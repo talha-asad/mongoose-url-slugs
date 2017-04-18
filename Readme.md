@@ -13,7 +13,7 @@ A simple URL based slug generator for mongoose models.
 ```
 $ npm install mongoose-url-slugs
 ```
-## Breaking Changes v1
+## V1 Breaking Changes
 
 Option keys are now all Camel case, as opposed to previously.
 
@@ -74,7 +74,7 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 ```
 
 
-## Default options
+## Options and defaults
 
 * **field** (Default: 'slug') - Slug field to use for storage.
 * **addField** (Default: True) - Add slug field to mongoose schema.

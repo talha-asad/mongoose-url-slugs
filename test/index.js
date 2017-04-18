@@ -10,15 +10,20 @@ mongoose.connection.on('error', function(err) {
 });
 
 var maxLength = 20,
-    TestObjSchema = new mongoose.Schema({name: String});
+    TestObjSchema = new mongoose.Schema({name: String, extra: String}),
+    TestObjSparseSchema = new mongoose.Schema({name: String, extra: String});
 
-TestObjSchema.plugin(urlSlugs('name', {maxLength: maxLength, indexSparse: true}));
+TestObjSchema.plugin(urlSlugs('name', {maxLength: maxLength}));
+TestObjSparseSchema.plugin(urlSlugs('name', {maxLength: maxLength, indexSparse: true}));
 
 var TestObj = mongoose.model('test_obj', TestObjSchema);
+var TestSparseObj = mongoose.model('test_sparse_obj', TestObjSparseSchema);
 
 describe('mongoose-url-slugs', function() {
   before(function(done) {
-    TestObj.remove(done);
+    TestObj.remove(function() {
+      TestSparseObj.remove(done);
+    });
   });
 
   describe('maxLength', function() {
@@ -42,16 +47,38 @@ describe('mongoose-url-slugs', function() {
       });
     });
   });
+  
+  describe('undefined slug dependent field', function() {
+    it('uses undefined when slug field does not exist', function(done) {
+      TestObj.create({extra: 'test'}, function(err, obj) {
+        expect(err).to.not.exist;
+        expect(obj.slug).to.equal('undefined');
+        TestObj.create({extra: 'test2'}, function(err, obj2) {
+          expect(err).to.not.exist;
+          expect(obj2.slug).to.equal('undefined-2');
+          expect(obj._id.equals(obj2._id)).to.be.false;
+          done();
+        });
+      });
+    });
+    it('sets slug to undefined when it is an empty string', function(done) {
+      TestObj.create({name: ''}, function(err, obj) {
+        expect(err).to.not.exist;
+        expect(obj.slug).to.equal('undefined-3');
+        done();
+      });
+    });
+  });
 
   describe('index_sparse', function() {
     it('sets slug to null when it is an empty string', function(done) {
-      TestObj.create({name: ''}, function(err, obj) {
+      TestSparseObj.create({name: ''}, function(err, obj) {
         expect(err).to.not.exist;
         expect(obj.slug).to.be.empty;
-        TestObj.create({name: ''}, function(err, obj2) {
+        TestSparseObj.create({name: ''}, function(err, obj2) {
           expect(err).to.not.exist;
           expect(obj2.slug).to.be.empty;
-          expect(obj._id.equals(obj2.id)).to.be.false;
+          expect(obj._id.equals(obj2._id)).to.be.false;
           done();
         });
       });
