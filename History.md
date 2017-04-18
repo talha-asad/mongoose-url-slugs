@@ -2,12 +2,12 @@
 
 ## V 1.0.0 (April 18, 2017)
 * *BREAKING CHANGES*
-* Added alwaysRecreate ((https://github.com/PeterJausovec) PeterJausovec)
+* Added alwaysRecreate ([PeterJausovec](https://github.com/PeterJausovec))
 * Added undefinedVal option.
-* Added additional tests ((https://github.com/phillee) phillee)
+* Added additional tests ([phillee](https://github.com/phillee))
 
 ## V 0.3.0 (April 18, 2017)
-* Added onHook option ((https://github.com/mtimofiiv) mtimofiiv)
+* Added onHook option ([mtimofiiv](https://github.com/mtimofiiv))
 * Updated dependencies
 
 ## V 0.2.1 (February 4, 2016)
