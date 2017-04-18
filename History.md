@@ -1,7 +1,12 @@
 # History
 
+## V 1.0.0 (April 18, 2017)
+* *BREAKING CHANGES*
+* Added alwaysRecreate ((https://github.com/PeterJausovec)PeterJausovec)
+* Added additional tests ((https://github.com/phillee)phillee)
+
 ## V 0.3.0 (April 18, 2017)
-* Added onHook option (mtimofiiv)
+* Added onHook option ((https://github.com/mtimofiiv)mtimofiiv)
 * Updated dependencies
 
 ## V 0.2.1 (February 4, 2016)

@@ -112,14 +112,14 @@ var defaultOptions = {
   separator: '-',
   maxLength: null,
   update: false,
+  alwaysRecreate: false,
   index: true,
-  index_type: String,
-  index_default: '',
-  index_trim: true,
-  index_unique: true,
-  index_required: false,
-  index_sparse: false,
-  recreate: false
+  indexType: String,
+  indexDefault: '',
+  indexTrim: true,
+  indexUnique: true,
+  indexRequired: false,
+  indexSparse: false
 };
 
 module.exports = function(slugFields, options) {
@@ -132,12 +132,22 @@ module.exports = function(slugFields, options) {
   return (function(schema) {
     if (options.addField) {
       var schemaField = {};
-      schemaField[options.field] = {type: options.index_type, default: options.index_default, trim: options.index_trim, index: options.index, unique: options.index_unique, required: options.index_required, sparse: options.index_sparse};
+      
+      schemaField[options.field] = {
+        type: options.indexType,
+        default: options.indexDefault,
+        trim: options.indexTrim,
+        index: options.index,
+        unique: options.indexUnique,
+        required: options.indexRequired,
+        sparse: options.indexSparse
+      };
+      
       schema.add(schemaField);
     }
 
     schema.methods.ensureUniqueSlug = function(slug, cb) {
-      if (!options.index_unique) return cb(null, slug);
+      if (!options.indexUnique) return cb(null, slug);
       var doc = this,
           model = doc.constructor,
           slugLimited = (options.maxLength && slug.length === options.maxLength),
@@ -181,13 +191,7 @@ module.exports = function(slugFields, options) {
       var doc = this;
       var currentSlug = doc.get(options.field, String);
       var slugFieldsModified = doc.isNew;
-      if (doc.recreate) {
-        slugFieldsModified = true;
-      } else {
-        if (!doc.isNew && !options.update && currentSlug) {
-          return next();
-        }
-      }
+      if (!doc.isNew && !options.update && currentSlug) return next();
 
       var toSlugify = '';
       if (slugFields instanceof Array) {
@@ -203,12 +207,13 @@ module.exports = function(slugFields, options) {
         toSlugify = doc.get(slugFields, String);
       }
 
-      if (!slugFieldsModified && currentSlug) return next();
+      if (!options.alwaysRecreate && !slugFieldsModified && currentSlug) return next();
 
       var newSlug = options.generator(removeDiacritics(toSlugify), options.separator);
-
-      if (!newSlug.length && options.index_sparse) {
+      
+      if (newSlug.length === 0 && options.indexSparse) {
         doc.set(options.field, undefined);
+        doc.markModified(options.field); // sometimes required :)
         return next();
       }
 
@@ -217,7 +222,7 @@ module.exports = function(slugFields, options) {
       doc.ensureUniqueSlug(newSlug, function(e, finalSlug) {
         if (e) return next(e);
         doc.set(options.field, finalSlug);
-        doc.markModified(options.field, finalSlug); // sometimes required :)
+        doc.markModified(options.field); // sometimes required :)
         next();
       });
 

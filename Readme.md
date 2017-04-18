@@ -13,6 +13,9 @@ A simple URL based slug generator for mongoose models.
 ```
 $ npm install mongoose-url-slugs
 ```
+## Breaking Changes v1
+
+Option keys are now all Camel case, as opposed to previously.
 
 ## What is a Slug?
 
@@ -76,16 +79,17 @@ testSchema.plugin(URLSlugs('first_name last_name', {field: 'myslug'}));
 * **field** (Default: 'slug') - Slug field to use for storage.
 * **addField** (Default: True) - Add slug field to mongoose schema.
 * **separator** (Default: '-') - Separator to use for invalid characters.
-* **generator(text, separator)** (Default: lowercases and then replaces all non alphanumeric characters to seperator) - Function to generate slug.
+* **generator(text, separator)** (Default: lowercases and replaces all non alphanumeric to seperator) - Function to generate slug.
 * **maxLength** (Default: null) - If set, restricts slug length to specified value.
-* **update** (Default: False) - Update slug when slug building fields change.
+* **update** (Default: False) - Update slug when dependent fields change.
+* **alwaysRecreate** (Default: False) - If true, will recreate slug regardless of change on dependent fields.
 * **index** (Default: True) - Mark slug field as index in mongoose schema.
-* **index_type** (Default: String) - Mongoose schema slug index type.
-* **index_default** (Default: '') - Mongoose schema slug index default value.
-* **index_trim** (Default: True) - Mongoose schema slug index trim value.
-* **index_unique** (Default: True) - Mongoose schema slug index unique value.
-* **index_required** (Default: True) - Mongoose schema slug index required value.
-* **index_sparse** (Default: False) - Mongoose schema slug index sparse value.
+* **indexType** (Default: String) - Mongoose schema slug index type.
+* **indexDefault** (Default: '') - Mongoose schema slug index default value.
+* **indexTrim** (Default: True) - Mongoose schema slug index trim value.
+* **indexUnique** (Default: True) - Mongoose schema slug index unique value.
+* **indexRequired** (Default: True) - Mongoose schema slug index required value.
+* **indexSparse** (Default: False) - Mongoose schema slug index sparse value.
 * **onHook** (Default: 'validate') - Mongoose document hook to update slug.
 
 ## License
