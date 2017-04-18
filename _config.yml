@@ -1,0 +1,8 @@
+title: Mongoose URL Slugs
+description: Create URL compatiable slugs on mongoose models, ensuring uniqueness.
+google_analytics: UA-49019483-1
+show_downloads: true
+theme: jekyll-theme-minimal
+
+gems:
+  - jekyll-mentions
