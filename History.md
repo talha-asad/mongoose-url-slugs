@@ -1,5 +1,9 @@
 # History
 
+## V 0.2.2 (April 18, 2017)
+* Added onHook option (mtimofiiv)
+* Updated dependencies
+
 ## V 0.2.1 (February 4, 2016)
 * Add files key to package.json
 

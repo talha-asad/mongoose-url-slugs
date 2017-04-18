@@ -6,7 +6,7 @@
   },
   "name": "mongoose-url-slugs",
   "description": "Create URL compatiable slugs on mongoose models, ensuring uniqueness.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "keywords": [
     "mongoose slugs",
     "mongoose url slugs",
@@ -15,10 +15,10 @@
     "mongodb url slugs",
     "mongoose"
   ],
-  "homepage": "http://mindblaze.github.io/mongoose-url-slugs",
+  "homepage": "http://talha-asad.github.io/mongoose-url-slugs/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mindblaze/mongoose-url-slugs.git"
+    "url": "git://github.com/talha-asad/mongoose-url-slugs.git"
   },
   "main": "index.js",
   "files": [
@@ -35,8 +35,8 @@
     "test": "./node_modules/mocha/bin/_mocha test"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
-    "mocha": "^2.3.4",
-    "mongoose": "^4.3.7"
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "mongoose": "^4.9.5"
   }
 }
