@@ -1,5 +1,8 @@
 # History
 
+## V 1.0.2 (September 19, 2017)
+* Fixed a bug which updated slug even when dependant fields were not selected.
+
 ## V 1.0.1 (September 19, 2017)
 * Fixed a bug which added unnecessary numbers ([ralphnajm](https://github.com/ralphnajm))
 

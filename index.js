@@ -192,6 +192,7 @@ module.exports = function(slugFields, options) {
       var doc = this;
       var currentSlug = doc.get(options.field, String);
       var slugFieldsModified = doc.isNew;
+      var slugFieldsSelected = true;
 
       // Skip if it's an edit and the plugin is configured to not update.
       if (!doc.isNew && !options.update && currentSlug) return next();
@@ -203,6 +204,7 @@ module.exports = function(slugFields, options) {
       if (slugFields instanceof Array) {
         for (var i = 0; i < slugFields.length; i++) {
           var slugField = slugFields[i];
+          if (!doc.isSelected(slugField)) slugFieldsSelected = false;
           if (doc.isModified(slugField)) slugFieldsModified = true;
           var slugPart = doc.get(slugField, String);
           if (slugPart !== undefined) toSlugify += slugPart + ' ';
@@ -210,12 +212,17 @@ module.exports = function(slugFields, options) {
         if (toSlugify.length) toSlugify = toSlugify.substr(0, toSlugify.length - 1);
         else toSlugify = options.undefinedVal;
       } else {
+        if (!doc.isSelected(slugField)) slugFieldsSelected = false;
         if (doc.isModified(slugFields)) slugFieldsModified = true;
         var slugPart = doc.get(slugFields, String);
         if (slugPart !== undefined) toSlugify += slugPart;
         if (!toSlugify.length) toSlugify = options.undefinedVal;
       }
-
+      
+      // Skip setting slug if slug dependant fields were not selected
+      if (!slugFieldsSelected) return next();
+      
+      
       if (!options.alwaysRecreate && !slugFieldsModified && currentSlug) return next();
 
       var newSlug = options.generator(removeDiacritics(toSlugify), options.separator);

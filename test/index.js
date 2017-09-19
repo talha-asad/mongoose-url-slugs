@@ -48,8 +48,8 @@ describe('mongoose-url-slugs', function() {
     });
   });
   
-  describe('numbering', function() {
-    it('does not add necessary numbers', function(done) {
+  describe('slug numbering', function() {
+    it('does not add unnecessary numbers', function(done) {
       TestObj.create({name: 'Foo Bar'}, function(err, obj) {
         expect(err).to.not.exist;
         expect(obj.slug).to.equal('foo-bar');
@@ -63,8 +63,29 @@ describe('mongoose-url-slugs', function() {
     });
   });
   
-  describe('undefined slug dependent field', function() {
-    it('uses undefined when slug field does not exist', function(done) {
+  describe('slug', function() {
+    it('does not use undefined when slug field was not selected and document was saved', function(done) {
+      TestObj.create({name: 'selected', extra: 'test'}, function(err, obj) {
+        expect(err).to.not.exist;
+        expect(obj.slug).to.equal('selected');
+        TestObj.findOne({name: 'selected'}, 'extra', function(err, obj2) {
+          expect(err).to.not.exist;
+          expect(obj2).to.exist;
+          obj2.extra = 'test2';
+          obj2.save(function(err, obj3) {
+            expect(err).to.not.exist;
+            expect(obj3.extra).to.equal('test2');
+            TestObj.findOne({name: 'selected'}, function(err, obj4) {
+              expect(err).to.not.exist;
+              expect(obj4.extra).to.equal('test2');
+              expect(obj4.slug).to.equal('selected');
+              done();
+            });
+          });
+        });
+      });
+    });
+    it('uses undefined when slug field does not exist but was selected', function(done) {
       TestObj.create({extra: 'test'}, function(err, obj) {
         expect(err).to.not.exist;
         expect(obj.slug).to.equal('undefined');
@@ -76,7 +97,7 @@ describe('mongoose-url-slugs', function() {
         });
       });
     });
-    it('sets slug to undefined when it is an empty string', function(done) {
+    it('sets slug to undefined when it is an empty string and was selected', function(done) {
       TestObj.create({name: ''}, function(err, obj) {
         expect(err).to.not.exist;
         expect(obj.slug).to.equal('undefined-3');
