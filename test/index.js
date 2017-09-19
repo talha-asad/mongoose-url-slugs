@@ -48,6 +48,21 @@ describe('mongoose-url-slugs', function() {
     });
   });
   
+  describe('numbering', function() {
+    it('does not add necessary numbers', function(done) {
+      TestObj.create({name: 'Foo Bar'}, function(err, obj) {
+        expect(err).to.not.exist;
+        expect(obj.slug).to.equal('foo-bar');
+        TestObj.create({name: 'Foo'}, function(err, obj2) {
+          expect(err).to.not.exist;
+          expect(obj2.slug).to.equal('foo');
+          expect(obj._id.equals(obj2._id)).to.be.false;
+          done();
+        });
+      });
+    });
+  });
+  
   describe('undefined slug dependent field', function() {
     it('uses undefined when slug field does not exist', function(done) {
       TestObj.create({extra: 'test'}, function(err, obj) {

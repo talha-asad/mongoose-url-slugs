@@ -1,5 +1,8 @@
 # History
 
+## V 1.0.1 (September 19, 2017)
+* Fixed a bug which added unnecessary numbers ([ralphnajm](https://github.com/ralphnajm))
+
 ## V 1.0.0 (April 18, 2017)
 * *BREAKING CHANGES*
 * Added alwaysRecreate ([PeterJausovec](https://github.com/PeterJausovec))
