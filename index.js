@@ -133,7 +133,7 @@ module.exports = function(slugFields, options) {
   return (function(schema) {
     if (options.addField) {
       var schemaField = {};
-      
+
       schemaField[options.field] = {
         type: options.indexType,
         default: options.indexDefault,
@@ -143,7 +143,7 @@ module.exports = function(slugFields, options) {
         required: options.indexRequired,
         sparse: options.indexSparse
       };
-      
+
       schema.add(schemaField);
     }
 
@@ -167,14 +167,14 @@ module.exports = function(slugFields, options) {
             var count = 1;
             if (docSlug !== slug) {
               count = docSlug.match(new RegExp((slugLimited ? slug.substr(0, slug.length - 2) : slug) + options.separator + '([0-9]+)$'));
-              count = ((count instanceof Array) ? parseInt(count[1]) : 0) + 1;
+              count = ((count instanceof Array) ? parseInt(count[1]) + 1 : 0);
             }
             return (count > max) ? count : max;
           }, 0);
 
           if (max === 1) max++; // avoid slug-1, rather do slug-2
 
-          var suffix = options.separator + max;
+          var suffix = ((max === 0) ? '' : options.separator + max);
 
           if (options.maxLength) return cb(null, slug.substr(0, options.maxLength - suffix.length) + suffix);
           else return cb(null, slug + suffix);
@@ -192,10 +192,10 @@ module.exports = function(slugFields, options) {
       var doc = this;
       var currentSlug = doc.get(options.field, String);
       var slugFieldsModified = doc.isNew;
-      
+
       // Skip if it's an edit and the plugin is configured to not update.
       if (!doc.isNew && !options.update && currentSlug) return next();
-      
+
       // Skip if it's an edit and the user explicitly sets a slug and plugin is not configured to always recreate slug.
       else if (!doc.isNew && doc.isModified(options.field) && currentSlug && !options.alwaysRecreate) return next();
 
@@ -219,7 +219,7 @@ module.exports = function(slugFields, options) {
       if (!options.alwaysRecreate && !slugFieldsModified && currentSlug) return next();
 
       var newSlug = options.generator(removeDiacritics(toSlugify), options.separator);
-      
+
       if (options.indexSparse && newSlug === options.undefinedVal) {
         doc.set(options.field, undefined);
         doc.markModified(options.field); // sometimes required :)
